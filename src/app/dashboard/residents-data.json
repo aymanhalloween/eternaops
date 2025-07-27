@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "name": "Margaret Thompson",
+    "community": "Sunset Manor",
+    "interviewProgress": "8/12",
+    "chaptersStatus": "3 draft, 2 approved",
+    "nextInterview": "2024-01-15",
+    "assignedWriter": "Sarah Johnson",
+    "status": "Active",
+    "background": "Former Stanford professor"
+  },
+  {
+    "id": 2,
+    "name": "Robert Chen",
+    "community": "Golden Hills",
+    "interviewProgress": "12/12",
+    "chaptersStatus": "8 approved, 4 final",
+    "nextInterview": "Complete",
+    "assignedWriter": "Michael Davis",
+    "status": "Review",
+    "background": "Apple engineer (retired)"
+  },
+  {
+    "id": 3,
+    "name": "Dorothy Williams",
+    "community": "Sunrise Gardens",
+    "interviewProgress": "5/12",
+    "chaptersStatus": "2 draft, 1 approved",
+    "nextInterview": "2024-01-18",
+    "assignedWriter": "Emily Rodriguez",
+    "status": "Active",
+    "background": "Former nurse educator"
+  },
+  {
+    "id": 4,
+    "name": "Dr. James Patterson",
+    "community": "Heritage Oaks",
+    "interviewProgress": "10/12",
+    "chaptersStatus": "6 approved, 2 draft",
+    "nextInterview": "2024-01-20",
+    "assignedWriter": "David Kim",
+    "status": "Active",
+    "background": "Retired physician"
+  },
+  {
+    "id": 5,
+    "name": "Mary Elizabeth Ford",
+    "community": "Sunset Manor",
+    "interviewProgress": "3/12",
+    "chaptersStatus": "1 draft, 1 pending",
+    "nextInterview": "2024-01-22",
+    "assignedWriter": "Sarah Johnson",
+    "status": "Active",
+    "background": "Former school principal"
+  },
+  {
+    "id": 6,
+    "name": "Colonel William Hayes",
+    "community": "Veterans Village",
+    "interviewProgress": "15/15",
+    "chaptersStatus": "12 final, ready for print",
+    "nextInterview": "Complete",
+    "assignedWriter": "Jennifer Lee",
+    "status": "Complete",
+    "background": "Military officer"
+  },
+  {
+    "id": 7,
+    "name": "Professor Helen Martinez",
+    "community": "University Heights",
+    "interviewProgress": "7/12",
+    "chaptersStatus": "4 approved, 1 draft",
+    "nextInterview": "2024-01-17",
+    "assignedWriter": "Alex Thompson",
+    "status": "Active",
+    "background": "University of Pennsylvania professor"
+  },
+  {
+    "id": 8,
+    "name": "Thomas O'Connor",
+    "community": "Golden Hills",
+    "interviewProgress": "2/12",
+    "chaptersStatus": "1 draft",
+    "nextInterview": "2024-01-16",
+    "assignedWriter": "Michael Davis",
+    "status": "Active",
+    "background": "Former Coinbase executive"
+  },
+  {
+    "id": 9,
+    "name": "Dr. Patricia Johnson",
+    "community": "Sunrise Gardens",
+    "interviewProgress": "11/12",
+    "chaptersStatus": "7 approved, 3 draft",
+    "nextInterview": "2024-01-19",
+    "assignedWriter": "Emily Rodriguez",
+    "status": "Review",
+    "background": "Retired pediatrician"
+  },
+  {
+    "id": 10,
+    "name": "Frank Anderson",
+    "community": "Heritage Oaks",
+    "interviewProgress": "6/12",
+    "chaptersStatus": "3 approved, 2 draft",
+    "nextInterview": "2024-01-21",
+    "assignedWriter": "David Kim",
+    "status": "Active",
+    "background": "Former business executive"
+  }
+]
