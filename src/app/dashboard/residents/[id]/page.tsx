@@ -36,8 +36,8 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
   }
 
   const totalInterviews = residentData.interviews?.length || 0
-  const completedChapters = residentData.chapters?.filter(c => c.status === 'Published').length || 0
-  const totalWordCount = residentData.chapters?.reduce((sum, chapter) => sum + (chapter.word_count || 0), 0) || 0
+  const completedChapters = residentData.chapters?.filter((c: any) => c.status === 'Published').length || 0
+  const totalWordCount = residentData.chapters?.reduce((sum: number, chapter: any) => sum + (chapter.word_count || 0), 0) || 0
   const progressPercentage = totalInterviews > 0 ? Math.round((completedChapters / Math.max(totalInterviews, 1)) * 100) : 0
 
   return (
@@ -47,7 +47,7 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
         <div className="flex items-center space-x-4">
           <Avatar className="h-16 w-16">
             <AvatarFallback className="text-lg font-semibold">
-              {residentData.name.split(' ').map(n => n[0]).join('')}
+              {residentData.name.split(' ').map((n: string) => n[0]).join('')}
             </AvatarFallback>
           </Avatar>
           <div>
