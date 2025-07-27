@@ -4,10 +4,10 @@ import { ResidentsTable } from "@/components/residents-table"
 import { SectionCards } from "@/components/section-cards"
 import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { getResidents } from "@/lib/supabase/queries"
 
-import residentsData from "./residents-data.json"
-
-export default function Page() {
+export default async function Page() {
+  const residents = await getResidents()
   return (
     <SidebarProvider>
       <AppSidebar variant="inset" />
@@ -20,7 +20,7 @@ export default function Page() {
               <div className="px-4 lg:px-6">
                 <AnalyticsCharts />
               </div>
-              <ResidentsTable data={residentsData} />
+              <ResidentsTable data={residents} />
             </div>
           </div>
         </div>

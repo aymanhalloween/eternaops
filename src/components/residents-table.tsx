@@ -16,20 +16,20 @@ import { Input } from "@/components/ui/input"
 import { SearchIcon, UserIcon } from "lucide-react"
 import Link from "next/link"
 
-type Resident = {
+type SupabaseResident = {
   id: number
   name: string
-  community: string
-  interviewProgress: string
-  chaptersStatus: string
-  nextInterview: string
-  assignedWriter: string
-  status: string
-  background: string
+  background_notes: string | null
+  progress_status: string
+  home: {
+    name: string
+  } | null
+  interviews: any[]
+  chapters: any[]
 }
 
 interface ResidentsTableProps {
-  data: Resident[]
+  data: SupabaseResident[]
 }
 
 function getStatusVariant(status: string) {
@@ -50,8 +50,8 @@ export function ResidentsTable({ data }: ResidentsTableProps) {
 
   const filteredData = data.filter(resident => 
     resident.name.toLowerCase().includes(search.toLowerCase()) ||
-    resident.community.toLowerCase().includes(search.toLowerCase()) ||
-    resident.assignedWriter.toLowerCase().includes(search.toLowerCase())
+    (resident.home?.name || '').toLowerCase().includes(search.toLowerCase()) ||
+    (resident.background_notes || '').toLowerCase().includes(search.toLowerCase())
   )
 
   return (
@@ -99,30 +99,30 @@ export function ResidentsTable({ data }: ResidentsTableProps) {
                       {resident.name}
                     </Link>
                     <div className="text-sm text-muted-foreground">
-                      {resident.background}
+                      {resident.background_notes?.substring(0, 100)}...
                     </div>
                   </div>
                 </TableCell>
-                <TableCell>{resident.community}</TableCell>
+                <TableCell>{resident.home?.name || 'N/A'}</TableCell>
                 <TableCell>
-                  <div className="text-sm font-medium">{resident.interviewProgress}</div>
+                  <div className="text-sm font-medium">{resident.interviews?.length || 0} sessions</div>
                 </TableCell>
                 <TableCell>
-                  <div className="text-sm">{resident.chaptersStatus}</div>
+                  <div className="text-sm">{resident.chapters?.length || 0} chapters</div>
                 </TableCell>
                 <TableCell>
                   <div className="text-sm">
-                    {resident.nextInterview === "Complete" ? (
+                    {resident.progress_status === "Complete" ? (
                       <Badge variant="outline">Complete</Badge>
                     ) : (
-                      resident.nextInterview
+                      "Scheduled"
                     )}
                   </div>
                 </TableCell>
-                <TableCell>{resident.assignedWriter}</TableCell>
+                <TableCell>Team Member</TableCell>
                 <TableCell>
-                  <Badge variant={getStatusVariant(resident.status)}>
-                    {resident.status}
+                  <Badge variant={getStatusVariant(resident.progress_status)}>
+                    {resident.progress_status}
                   </Badge>
                 </TableCell>
                 <TableCell className="text-right">

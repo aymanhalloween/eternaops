@@ -17,74 +17,12 @@ import {
   Pause
 } from 'lucide-react'
 import Link from 'next/link'
-
-// Mock data - in real app this would come from API
-const residentData = {
-  id: 1,
-  name: "Margaret Chen",
-  backgroundNotes: "Retired Stanford computer science professor, pioneered early AI research in the 1970s. Originally from Taiwan, immigrated to the US in 1965.",
-  progressStatus: "Active",
-  retirementHome: "Sunset Manor",
-  joinDate: "2024-01-15",
-  interviews: [
-    {
-      id: 1,
-      sessionNumber: 1,
-      date: "2024-02-01",
-      duration: "45 min",
-      status: "Transcribed",
-      topics: ["Early life in Taiwan", "Immigration journey"]
-    },
-    {
-      id: 2,
-      sessionNumber: 2,
-      date: "2024-02-08",
-      duration: "52 min",
-      status: "Transcribed",
-      topics: ["Stanford years", "PhD research"]
-    },
-    {
-      id: 3,
-      sessionNumber: 3,
-      date: "2024-02-15",
-      duration: "38 min",
-      status: "Processing",
-      topics: ["AI research", "Teaching career"]
-    }
-  ],
-  chapters: [
-    {
-      id: 1,
-      title: "Growing Up in Taiwan",
-      status: "Published",
-      wordCount: 2800,
-      order: 1
-    },
-    {
-      id: 2,
-      title: "The Journey to America",
-      status: "Review",
-      wordCount: 3200,
-      order: 2
-    },
-    {
-      id: 3,
-      title: "Stanford and the Early Days of AI",
-      status: "Draft",
-      wordCount: 1900,
-      order: 3
-    }
-  ],
-  stats: {
-    totalInterviews: 3,
-    completedChapters: 1,
-    totalWordCount: 7900,
-    progressPercentage: 45
-  }
-}
+import { getResident } from '@/lib/supabase/queries'
 
 export default async function ResidentProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
+  const residentData = await getResident(parseInt(id))
+
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'published': return 'bg-green-100 text-green-800'
@@ -92,9 +30,15 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
       case 'draft': return 'bg-blue-100 text-blue-800'
       case 'transcribed': return 'bg-green-100 text-green-800'
       case 'processing': return 'bg-orange-100 text-orange-800'
+      case 'uploaded': return 'bg-blue-100 text-blue-800'
       default: return 'bg-gray-100 text-gray-800'
     }
   }
+
+  const totalInterviews = residentData.interviews?.length || 0
+  const completedChapters = residentData.chapters?.filter(c => c.status === 'Published').length || 0
+  const totalWordCount = residentData.chapters?.reduce((sum, chapter) => sum + (chapter.word_count || 0), 0) || 0
+  const progressPercentage = totalInterviews > 0 ? Math.round((completedChapters / Math.max(totalInterviews, 1)) * 100) : 0
 
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
@@ -111,14 +55,14 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
               <div className="flex items-center">
                 <MapPin className="mr-1 h-4 w-4" />
-                {residentData.retirementHome}
+                {residentData.home?.name || 'N/A'}
               </div>
               <div className="flex items-center">
                 <Calendar className="mr-1 h-4 w-4" />
-                Joined {new Date(residentData.joinDate).toLocaleDateString()}
+                Joined {new Date(residentData.created_at).toLocaleDateString()}
               </div>
-              <Badge className={getStatusColor(residentData.progressStatus)}>
-                {residentData.progressStatus}
+              <Badge className={getStatusColor(residentData.progress_status)}>
+                {residentData.progress_status}
               </Badge>
             </div>
           </div>
@@ -143,7 +87,7 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
             <Mic className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{residentData.stats.totalInterviews}</div>
+            <div className="text-2xl font-bold">{totalInterviews}</div>
           </CardContent>
         </Card>
         <Card>
@@ -152,7 +96,7 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
             <BookOpen className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{residentData.stats.completedChapters}</div>
+            <div className="text-2xl font-bold">{completedChapters}</div>
           </CardContent>
         </Card>
         <Card>
@@ -161,7 +105,7 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{residentData.stats.totalWordCount.toLocaleString()}</div>
+            <div className="text-2xl font-bold">{totalWordCount.toLocaleString()}</div>
           </CardContent>
         </Card>
         <Card>
@@ -170,8 +114,8 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
             <User className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{residentData.stats.progressPercentage}%</div>
-            <Progress value={residentData.stats.progressPercentage} className="mt-2" />
+            <div className="text-2xl font-bold">{progressPercentage}%</div>
+            <Progress value={progressPercentage} className="mt-2" />
           </CardContent>
         </Card>
       </div>
@@ -192,7 +136,7 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
               <CardDescription>Key information about the resident's life and story</CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm leading-relaxed">{residentData.backgroundNotes}</p>
+              <p className="text-sm leading-relaxed">{residentData.background_notes || 'No background notes available.'}</p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -206,26 +150,30 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
             </Button>
           </div>
           <div className="grid gap-4">
-            {residentData.interviews.map((interview) => (
+            {residentData.interviews?.map((interview, index) => (
               <Card key={interview.id}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
                     <div className="space-y-1">
                       <div className="flex items-center space-x-2">
-                        <h4 className="font-medium">Session {interview.sessionNumber}</h4>
+                        <h4 className="font-medium">Session {interview.session_number || index + 1}</h4>
                         <Badge className={getStatusColor(interview.status)}>
                           {interview.status}
                         </Badge>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        {new Date(interview.date).toLocaleDateString()} • {interview.duration}
+                        {new Date(interview.upload_date).toLocaleDateString()}
                       </p>
-                      <p className="text-sm">Topics: {interview.topics.join(', ')}</p>
+                      {interview.file_url && (
+                        <p className="text-sm">Interview file uploaded</p>
+                      )}
                     </div>
                     <div className="flex space-x-2">
-                      <Button variant="outline" size="sm">
-                        <Play className="h-4 w-4" />
-                      </Button>
+                      {interview.file_url && (
+                        <Button variant="outline" size="sm">
+                          <Play className="h-4 w-4" />
+                        </Button>
+                      )}
                       <Button variant="outline" size="sm">
                         <FileText className="h-4 w-4" />
                       </Button>
@@ -233,7 +181,13 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            )) || (
+              <Card>
+                <CardContent className="pt-6">
+                  <p className="text-center text-muted-foreground">No interviews recorded yet.</p>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </TabsContent>
 
@@ -246,7 +200,7 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
             </Button>
           </div>
           <div className="grid gap-4">
-            {residentData.chapters.map((chapter) => (
+            {residentData.chapters?.map((chapter) => (
               <Card key={chapter.id}>
                 <CardContent className="pt-6">
                   <div className="flex items-center justify-between">
@@ -258,7 +212,7 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
                         </Badge>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        Chapter {chapter.order} • {chapter.wordCount.toLocaleString()} words
+                        Chapter {chapter.order} • {(chapter.word_count || 0).toLocaleString()} words
                       </p>
                     </div>
                     <div className="flex space-x-2">
@@ -274,7 +228,13 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            )) || (
+              <Card>
+                <CardContent className="pt-6">
+                  <p className="text-center text-muted-foreground">No chapters created yet.</p>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </TabsContent>
 
@@ -289,31 +249,36 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
                 <div className="flex items-center space-x-4">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                   <div className="flex-1">
-                    <p className="font-medium">Initial interview completed</p>
-                    <p className="text-sm text-muted-foreground">Feb 1, 2024</p>
+                    <p className="font-medium">Resident enrolled</p>
+                    <p className="text-sm text-muted-foreground">
+                      {new Date(residentData.created_at).toLocaleDateString()}
+                    </p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-4">
-                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <div className="flex-1">
-                    <p className="font-medium">First chapter published</p>
-                    <p className="text-sm text-muted-foreground">Feb 10, 2024</p>
+                {residentData.interviews?.map((interview, index) => (
+                  <div key={interview.id} className="flex items-center space-x-4">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex-1">
+                      <p className="font-medium">Interview {index + 1} completed</p>
+                      <p className="text-sm text-muted-foreground">
+                        {new Date(interview.upload_date).toLocaleDateString()}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <div className="flex-1">
-                    <p className="font-medium">Chapter 2 in review</p>
-                    <p className="text-sm text-muted-foreground">Current</p>
+                ))}
+                {residentData.chapters?.map((chapter) => (
+                  <div key={chapter.id} className="flex items-center space-x-4">
+                    <div className={`w-2 h-2 rounded-full ${
+                      chapter.status === 'Published' ? 'bg-green-500' : 'bg-yellow-500'
+                    }`}></div>
+                    <div className="flex-1">
+                      <p className="font-medium">Chapter: {chapter.title}</p>
+                      <p className="text-sm text-muted-foreground">
+                        Status: {chapter.status}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-                  <div className="flex-1">
-                    <p className="font-medium">Target memoir completion</p>
-                    <p className="text-sm text-muted-foreground">April 2024</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </CardContent>
           </Card>
