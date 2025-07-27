@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     
     // Check authentication
     const { data: { session } } = await supabase.auth.getSession()
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     const filePath = `interviews/${residentId}/${timestamp}-session-${sessionNumber}.${fileExtension}`
 
     // Upload to Supabase Storage
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from('interview-files')
       .upload(filePath, file, {
         contentType: file.type,

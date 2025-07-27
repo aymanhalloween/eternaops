@@ -133,7 +133,7 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
           <Card>
             <CardHeader>
               <CardTitle>Background Notes</CardTitle>
-              <CardDescription>Key information about the resident's life and story</CardDescription>
+              <CardDescription>Key information about the resident&apos;s life and story</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm leading-relaxed">{residentData.background_notes || 'No background notes available.'}</p>

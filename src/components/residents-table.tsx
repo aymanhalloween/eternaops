@@ -24,8 +24,8 @@ type SupabaseResident = {
   home: {
     name: string
   } | null
-  interviews: any[]
-  chapters: any[]
+  interviews: unknown[]
+  chapters: unknown[]
 }
 
 interface ResidentsTableProps {

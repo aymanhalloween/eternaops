@@ -27,7 +27,6 @@ interface FileUploadProps {
 }
 
 export function FileUpload({ 
-  residentId, 
   onUploadComplete, 
   maxFiles = 10,
   acceptedFileTypes = {

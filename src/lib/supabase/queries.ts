@@ -4,7 +4,7 @@ import { Database } from './types'
 type Tables = Database['public']['Tables']
 
 export async function getResidents() {
-  const supabase = createClient()
+  const supabase = await createClient()
   
   const { data, error } = await supabase
     .from('residents')
@@ -21,7 +21,7 @@ export async function getResidents() {
 }
 
 export async function getResident(id: number) {
-  const supabase = createClient()
+  const supabase = await createClient()
   
   const { data, error } = await supabase
     .from('residents')
@@ -40,7 +40,7 @@ export async function getResident(id: number) {
 }
 
 export async function getRetirementHomes() {
-  const supabase = createClient()
+  const supabase = await createClient()
   
   const { data, error } = await supabase
     .from('retirement_homes')
@@ -55,7 +55,7 @@ export async function getRetirementHomes() {
 }
 
 export async function getChapter(id: number) {
-  const supabase = createClient()
+  const supabase = await createClient()
   
   const { data, error } = await supabase
     .from('chapters')
@@ -73,7 +73,7 @@ export async function getChapter(id: number) {
 }
 
 export async function updateChapter(id: number, updates: Partial<Tables['chapters']['Update']>) {
-  const supabase = createClient()
+  const supabase = await createClient()
   
   const { data, error } = await supabase
     .from('chapters')
@@ -87,7 +87,7 @@ export async function updateChapter(id: number, updates: Partial<Tables['chapter
 }
 
 export async function createInterview(interview: Tables['interviews']['Insert']) {
-  const supabase = createClient()
+  const supabase = await createClient()
   
   const { data, error } = await supabase
     .from('interviews')
@@ -100,7 +100,7 @@ export async function createInterview(interview: Tables['interviews']['Insert'])
 }
 
 export async function getRecentActivity() {
-  const supabase = createClient()
+  const supabase = await createClient()
   
   // Get recent interviews
   const { data: interviews } = await supabase
