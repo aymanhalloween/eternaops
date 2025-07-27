@@ -22,7 +22,7 @@ const chapterData = {
 }
 
 export default async function ChapterEditPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
+  const { id: _id } = await params
   
   return (
     <div className="flex-1 space-y-4 p-4 md:p-8 pt-6">
@@ -41,9 +41,13 @@ export default async function ChapterEditPage({ params }: { params: Promise<{ id
         content={chapterData.content}
         wordCount={chapterData.wordCount}
         status={chapterData.status}
-        onSave={(content) => {
-          console.log('Saving chapter:', content)
-          // In real app, this would make API call to save
+        onSave={async () => {
+          // TODO: Implement API call to save chapter content
+          try {
+            // await saveChapter(_id, content)
+          } catch (error) {
+            console.error('Failed to save chapter:', error)
+          }
         }}
       />
     </div>

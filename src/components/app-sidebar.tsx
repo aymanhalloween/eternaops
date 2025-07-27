@@ -2,14 +2,20 @@
 
 import * as React from "react"
 import {
-  BarChart3Icon,
-  BookOpenIcon,
-  BuildingIcon,
-  ClockIcon,
-  HeartHandshakeIcon,
+  ArrowUpCircleIcon,
+  BarChartIcon,
+  CameraIcon,
+  ClipboardListIcon,
+  DatabaseIcon,
+  FileCodeIcon,
+  FileIcon,
+  FileTextIcon,
+  FolderIcon,
+  HelpCircleIcon,
   LayoutDashboardIcon,
+  ListIcon,
+  SearchIcon,
   SettingsIcon,
-  UploadIcon,
   UsersIcon,
 } from "lucide-react"
 
@@ -29,35 +35,83 @@ import {
 
 const data = {
   user: {
-    name: "Eterna Team",
-    email: "team@eterna.com",
-    avatar: "/avatars/team.jpg",
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: "#",
       icon: LayoutDashboardIcon,
     },
     {
-      title: "Upload Files",
-      url: "/dashboard/upload",
-      icon: UploadIcon,
+      title: "Lifecycle",
+      url: "#",
+      icon: ListIcon,
     },
     {
-      title: "Retirement Homes",
-      url: "/dashboard/homes",
-      icon: BuildingIcon,
+      title: "Analytics",
+      url: "#",
+      icon: BarChartIcon,
     },
     {
-      title: "Residents",
+      title: "Projects",
+      url: "#",
+      icon: FolderIcon,
+    },
+    {
+      title: "Team",
       url: "#",
       icon: UsersIcon,
     },
+  ],
+  navClouds: [
     {
-      title: "Recent Activity",
-      url: "/dashboard/activity",
-      icon: ClockIcon,
+      title: "Capture",
+      icon: CameraIcon,
+      isActive: true,
+      url: "#",
+      items: [
+        {
+          title: "Active Proposals",
+          url: "#",
+        },
+        {
+          title: "Archived",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Proposal",
+      icon: FileTextIcon,
+      url: "#",
+      items: [
+        {
+          title: "Active Proposals",
+          url: "#",
+        },
+        {
+          title: "Archived",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Prompts",
+      icon: FileCodeIcon,
+      url: "#",
+      items: [
+        {
+          title: "Active Proposals",
+          url: "#",
+        },
+        {
+          title: "Archived",
+          url: "#",
+        },
+      ],
     },
   ],
   navSecondary: [
@@ -66,17 +120,32 @@ const data = {
       url: "#",
       icon: SettingsIcon,
     },
+    {
+      title: "Get Help",
+      url: "#",
+      icon: HelpCircleIcon,
+    },
+    {
+      title: "Search",
+      url: "#",
+      icon: SearchIcon,
+    },
   ],
   documents: [
     {
-      name: "Completed Memoirs",
+      name: "Data Library",
       url: "#",
-      icon: BookOpenIcon,
+      icon: DatabaseIcon,
     },
     {
-      name: "Operations Analytics",
+      name: "Reports",
       url: "#",
-      icon: BarChart3Icon,
+      icon: ClipboardListIcon,
+    },
+    {
+      name: "Word Assistant",
+      url: "#",
+      icon: FileIcon,
     },
   ],
 }
@@ -92,8 +161,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <a href="#">
-                <HeartHandshakeIcon className="h-5 w-5" />
-                <span className="text-base font-semibold">Eterna Operations</span>
+                <ArrowUpCircleIcon className="h-5 w-5" />
+                <span className="text-base font-semibold">Acme Inc.</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

@@ -31,10 +31,8 @@ interface ChapterEditorProps {
 }
 
 export function ChapterEditor({ 
-  chapterId,
   title = "Untitled Chapter",
   content = "",
-  wordCount = 0,
   status = "Draft",
   onSave 
 }: ChapterEditorProps) {

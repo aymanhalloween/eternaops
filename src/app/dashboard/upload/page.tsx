@@ -66,8 +66,8 @@ export default function UploadPage() {
         <div className="space-y-4">
           <FileUpload 
             maxFiles={5}
-            onUploadComplete={(files) => {
-              console.log('Upload completed:', files)
+            onUploadComplete={() => {
+              // TODO: Process uploaded files
             }}
           />
         </div>

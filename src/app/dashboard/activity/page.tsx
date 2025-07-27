@@ -1,102 +1,103 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { 
-  Activity,
-  Upload, 
-  FileText, 
-  User, 
-  Edit, 
-  CheckCircle,
-  Clock,
-  Filter
-} from 'lucide-react'
+"use client"
 
-// Mock recent activity data
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { 
+  Activity, 
+  Upload, 
+  CheckCircle, 
+  User, 
+  FileText, 
+  Edit, 
+  Clock, 
+  Filter 
+} from "lucide-react"
+
+// Mock data for recent activities
 const recentActivities = [
   {
-    id: 1,
+    id: "1",
     type: "interview_uploaded",
-    title: "New interview uploaded",
-    description: "Margaret Chen - Session 4 interview recorded and uploaded",
+    title: "New Interview Uploaded",
+    description: "Dorothy Martinez - Session 3 audio file processed successfully",
     user: "Sarah Johnson",
-    timestamp: "2024-02-15T10:30:00Z",
-    resident: "Margaret Chen",
-    community: "Sunset Manor",
-    status: "processing"
-  },
-  {
-    id: 2,
-    type: "chapter_completed",
-    title: "Chapter completed",
-    description: "\"Growing Up in Taiwan\" chapter finalized and published",
-    user: "David Kim", 
-    timestamp: "2024-02-15T09:15:00Z",
-    resident: "Margaret Chen",
+    timestamp: "2024-02-15T14:30:00Z",
+    resident: "Dorothy Martinez",
     community: "Sunset Manor",
     status: "completed"
   },
   {
-    id: 3,
-    type: "resident_added",
-    title: "New resident enrolled",
-    description: "Eleanor Thompson joined the memoir program",
-    user: "Lisa Rodriguez",
-    timestamp: "2024-02-14T16:45:00Z",
-    resident: "Eleanor Thompson",
-    community: "Peaceful Gardens",
-    status: "active"
-  },
-  {
-    id: 4,
-    type: "transcript_completed",
-    title: "Transcript completed",
-    description: "Robert Martinez - Session 2 transcription finished",
-    user: "AI Transcription",
-    timestamp: "2024-02-14T14:20:00Z",
-    resident: "Robert Martinez",
+    id: "2", 
+    type: "chapter_completed",
+    title: "Chapter Review Completed",
+    description: "Robert Chen - Chapter 5: Military Service approved by editor",
+    user: "Mike Chen",
+    timestamp: "2024-02-15T13:15:00Z",
+    resident: "Robert Chen",
     community: "Golden Years",
     status: "completed"
   },
   {
-    id: 5,
-    type: "chapter_review",
-    title: "Chapter under review",
-    description: "\"The Journey to America\" submitted for editorial review",
-    user: "Michael Chen",
-    timestamp: "2024-02-14T11:30:00Z",
-    resident: "Margaret Chen",
+    id: "3",
+    type: "resident_added",
+    title: "New Resident Added",
+    description: "Helen Rodriguez joined the Eterna platform",
+    user: "Sarah Johnson", 
+    timestamp: "2024-02-15T11:45:00Z",
+    resident: "Helen Rodriguez",
+    community: "Peaceful Gardens",
+    status: "active"
+  },
+  {
+    id: "4",
+    type: "transcript_completed",
+    title: "Transcript Processing Complete",
+    description: "James Wilson - Session 2 transcript ready for review",
+    user: "System",
+    timestamp: "2024-02-15T10:20:00Z",
+    resident: "James Wilson",
     community: "Sunset Manor",
+    status: "processing"
+  },
+  {
+    id: "5",
+    type: "chapter_review",
+    title: "Chapter Submitted for Review",
+    description: "Margaret Thompson - Chapter 7: Family Traditions needs approval",
+    user: "Emma Davis",
+    timestamp: "2024-02-15T09:30:00Z",
+    resident: "Margaret Thompson", 
+    community: "Oak Ridge",
     status: "review"
   },
   {
-    id: 6,
+    id: "6",
     type: "memoir_exported",
-    title: "Memoir exported",
-    description: "Complete memoir PDF generated and delivered",
-    user: "Emily Watson",
-    timestamp: "2024-02-13T15:45:00Z",
-    resident: "James Wilson",
-    community: "Harbor View",
+    title: "Memoir Export Generated",
+    description: "Complete memoir for William Foster exported as PDF and audiobook",
+    user: "System",
+    timestamp: "2024-02-14T16:45:00Z",
+    resident: "William Foster",
+    community: "Golden Years",
     status: "completed"
   },
   {
-    id: 7,
+    id: "7",
     type: "interview_scheduled",
-    title: "Interview scheduled",
-    description: "Dorothy Anderson - Session 3 scheduled for Feb 16",
+    title: "Interview Scheduled",
+    description: "Ruth Anderson - Session 4 scheduled for February 16th",
     user: "Sarah Johnson",
-    timestamp: "2024-02-13T13:15:00Z",
-    resident: "Dorothy Anderson",
-    community: "Meadowbrook",
+    timestamp: "2024-02-14T14:20:00Z",
+    resident: "Ruth Anderson",
+    community: "Peaceful Gardens", 
     status: "scheduled"
   },
   {
-    id: 8,
+    id: "8",
     type: "community_joined",
-    title: "New community partnership",
+    title: "New Community Added",
     description: "Oak Ridge Senior Living joined Eterna platform",
     user: "System",
     timestamp: "2024-02-12T10:00:00Z",
@@ -214,7 +215,7 @@ export default function RecentActivityPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Today's Activities</CardTitle>
+            <CardTitle className="text-sm font-medium">Today&apos;s Activities</CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -286,4 +287,4 @@ export default function RecentActivityPage() {
       </Card>
     </div>
   )
-}
+} 

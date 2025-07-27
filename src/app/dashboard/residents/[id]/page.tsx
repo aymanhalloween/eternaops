@@ -36,8 +36,8 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
   }
 
   const totalInterviews = residentData.interviews?.length || 0
-  const completedChapters = residentData.chapters?.filter((c: any) => c.status === 'Published').length || 0
-  const totalWordCount = residentData.chapters?.reduce((sum: number, chapter: any) => sum + (chapter.word_count || 0), 0) || 0
+  const completedChapters = residentData.chapters?.filter((c: { status: string }) => c.status === 'Published').length || 0
+  const totalWordCount = residentData.chapters?.reduce((sum: number, chapter: { word_count?: number }) => sum + (chapter.word_count || 0), 0) || 0
   const progressPercentage = totalInterviews > 0 ? Math.round((completedChapters / Math.max(totalInterviews, 1)) * 100) : 0
 
   return (
@@ -133,7 +133,7 @@ export default async function ResidentProfilePage({ params }: { params: Promise<
           <Card>
             <CardHeader>
               <CardTitle>Background Notes</CardTitle>
-              <CardDescription>Key information about the resident's life and story</CardDescription>
+              <CardDescription>Key information about the resident&apos;s life and story</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm leading-relaxed">{residentData.background_notes || 'No background notes available.'}</p>
